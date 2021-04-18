@@ -8,5 +8,5 @@ public interface ArbolDBService {
 
 	Arbol buscarObjeto(Integer id);
 	
-	<T> Class<T> almacenarObjeto(Integer indice, Object objetoAAlmacenar, Class<T> entidad);
+	<T> Object almacenarObjeto(Integer indice, Object objetoAAlmacenar, Class<T> entidad);
 }

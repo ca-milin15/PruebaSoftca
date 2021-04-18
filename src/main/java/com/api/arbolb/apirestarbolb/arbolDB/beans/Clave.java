@@ -16,11 +16,13 @@ import lombok.experimental.FieldDefaults;
 public class Clave {
 	
 	Integer valorClave;
+	String entidad;
 	Nodo nodoIzquierda;
 	Nodo nodoDerecha;
 	
-	public Clave(Integer valorClave) {
+	public Clave(Integer valorClave, String objetoAAlmacenar) {
 		this.valorClave = valorClave;
+		this.entidad = objetoAAlmacenar;
 		this.nodoIzquierda = new Nodo();
 		this.nodoDerecha = new Nodo();
 	}

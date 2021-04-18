@@ -18,10 +18,10 @@ public class Nodo {
 	int tamanoActual;
 	boolean tipoNodoClave;
 	
-	public Nodo(Integer valor) {
+	public Nodo(Integer valor, String entidadAlmacenar) {
 		tipoNodoClave = true;
 		tamanoActual = 1;
-		listaClave.add(new Clave(valor));
+		listaClave.add(new Clave(valor, entidadAlmacenar));
 	}
 	
 	public Nodo(Clave clave) {

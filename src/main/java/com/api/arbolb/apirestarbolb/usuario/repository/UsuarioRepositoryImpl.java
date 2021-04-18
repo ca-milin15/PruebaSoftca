@@ -21,8 +21,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Usuario crearUsuario(Usuario usuario) {
-		arbolDBService.almacenarObjeto(null, usuario, Usuario.class);
-		return null;
+		return (Usuario) arbolDBService.almacenarObjeto(null, usuario, Usuario.class);
 	}
 
 }
