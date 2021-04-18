@@ -39,17 +39,37 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 	}
 
 	@Override
-	public Arbol buscarObjeto(Integer id) {
-		// TODO Auto-generated method stub
+	public String buscarObjeto(Integer id) throws Exception {
+		var arbolAlmacenado = leerArbolDelDisco();
+		var posibleRegistro = buscarRegistro(arbolAlmacenado.getNodo(), id);
+		if(!ObjectUtils.isEmpty(posibleRegistro)) {
+			return posibleRegistro.getEntidad();
+		}
+		// TODO
+		throw new Exception("hola");
+	}
+
+	
+	private Clave buscarRegistro(Nodo nodoRaiz, Integer id) {
+		var listaClaves = nodoRaiz.getListaClave();
+		for (int i = 0; i < listaClaves.size(); i++) {
+			var claveSiguiente = obtenerClaveSiguiente(listaClaves, i);
+			if(id < listaClaves.get(i).getValorClave()) {
+				return buscarRegistro(listaClaves.get(i).getNodoIzquierda(), id);
+			} else if(listaClaves.get(i).getValorClave() == id) {
+				return listaClaves.get(i);
+			} else if (id > listaClaves.get(i).getValorClave() && ObjectUtils.isEmpty(claveSiguiente)) {
+				return buscarRegistro(listaClaves.get(i).getNodoDerecha(), id);
+			}
+		}
 		return null;
 	}
 
 	@Override
-	public <T> Object almacenarObjeto(Integer indice, Object objetoAAlmacenar, Class<T> entidad) {
+	public <T> Object almacenarObjeto(Object objetoAAlmacenar, Class<T> entidad) {
 
 		try {
-			var instanciaArbol = new Arbol();
-			var arbolAlmacenado = instanciaArbol.obtenerArbol(objectMapper);
+			var arbolAlmacenado = leerArbolDelDisco();
 			var nodoRaiz = arbolAlmacenado.getNodo();
 			arbolAlmacenado.setNodo(buscarUbicacionParaInsertar(nodoRaiz, arbolAlmacenado.getAutoincremental(), convertirObjetoAString(objetoAAlmacenar)));
 			var indiceAsignadoAEntidad = arbolAlmacenado.getAutoincremental();
@@ -68,6 +88,11 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 		}
 	}
 
+	private Arbol leerArbolDelDisco() {
+		var instanciaArbol = new Arbol();
+		return instanciaArbol.obtenerArbol(objectMapper);
+	}
+	
 	private Nodo buscarUbicacionParaInsertar(Nodo nodoRaiz, Integer valor, String objetoAAlmacenar) throws JsonProcessingException {
 		if (!ObjectUtils.isEmpty(nodoRaiz)) {
 			var listaClaves = nodoRaiz.getListaClave();
@@ -192,5 +217,8 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 			return null;
 		}
 	}
+
+
+
 
 }

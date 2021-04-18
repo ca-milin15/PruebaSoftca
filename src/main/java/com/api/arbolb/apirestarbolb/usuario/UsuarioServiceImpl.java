@@ -17,8 +17,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
 	public UsuarioResponse buscarUsuarioPorId(Integer idUsuario) {
-		var usuario = usuarioRepository.buscarUsuarioPorId(idUsuario);
-		return new UsuarioResponse(usuario);
+		return new UsuarioResponse(usuarioRepository.buscarUsuarioPorId(idUsuario));
 	}
 
 	@Override
