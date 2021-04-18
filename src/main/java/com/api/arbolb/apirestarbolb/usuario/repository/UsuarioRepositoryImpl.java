@@ -1,13 +1,17 @@
 package com.api.arbolb.apirestarbolb.usuario.repository;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.api.arbolb.apirestarbolb.arbolDB.ArbolDBService;
 import com.api.arbolb.apirestarbolb.usuario.bean.Usuario;
 
+import lombok.AllArgsConstructor;
+
 @Service
-@Qualifier("arbol")
-public class UsuarioArbolBRepositoryImpl implements UsuarioRepository {
+@AllArgsConstructor
+public class UsuarioRepositoryImpl implements UsuarioRepository {
+
+	ArbolDBService arbolDBService;
 
 	@Override
 	public Usuario buscarUsuarioPorId(Integer idUsuario) {
@@ -17,7 +21,7 @@ public class UsuarioArbolBRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Usuario crearUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
+		arbolDBService.almacenarObjeto(null, usuario, Usuario.class);
 		return null;
 	}
 

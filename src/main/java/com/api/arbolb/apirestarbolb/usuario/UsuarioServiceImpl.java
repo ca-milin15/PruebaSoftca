@@ -1,6 +1,5 @@
 package com.api.arbolb.apirestarbolb.usuario;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.api.arbolb.apirestarbolb.usuario.bean.Usuario;
@@ -14,7 +13,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
-	@Qualifier("arbol")
 	UsuarioRepository usuarioRepository;
 	
 	@Override
