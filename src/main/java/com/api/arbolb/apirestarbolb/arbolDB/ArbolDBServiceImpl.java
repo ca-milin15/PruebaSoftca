@@ -14,6 +14,9 @@ import com.api.arbolb.apirestarbolb.arbolDB.beans.Arbol;
 import com.api.arbolb.apirestarbolb.arbolDB.beans.Clave;
 import com.api.arbolb.apirestarbolb.arbolDB.beans.Nodo;
 import com.api.arbolb.apirestarbolb.usuario.bean.Usuario;
+import com.api.arbolb.apirestarbolb.utilidades.beans.excepciones.ErrorTransaccionArchivoDiscoRuntimeException;
+import com.api.arbolb.apirestarbolb.utilidades.beans.excepciones.ObjetoNoEncontradoException;
+import com.api.arbolb.configuration.propiedades.Propiedades;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,7 +25,8 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class ArbolDBServiceImpl implements ArbolDBService {
-
+	
+	Propiedades propiedades;
 	ObjectMapper objectMapper;
 
 	@Override
@@ -33,20 +37,18 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 					"C:\\Users\\camilo\\Documents\\Proyectos Software\\PruebaSoftCaBack\\src\\main\\resources\\arbolDB\\tbl_usuario.json");
 			Files.write(rutaArchivo, arbolComoString.getBytes());
 		} catch (IOException e) {
-			// TODO Crear controller advice
-			e.printStackTrace();
+			throw new ErrorTransaccionArchivoDiscoRuntimeException(propiedades.getMensajes().getErrorLeyendoArchivoEnDisco());
 		}
 	}
 
 	@Override
-	public Object buscarObjeto(Integer id) throws Exception {
+	public Object buscarObjeto(Integer id) throws ObjetoNoEncontradoException {
 		var arbolAlmacenado = leerArbolDelDisco();
 		var posibleRegistro = buscarRegistro(arbolAlmacenado.getNodo(), id);
 		if(!ObjectUtils.isEmpty(posibleRegistro)) {
 			return posibleRegistro.getEntidad();
 		}
-		// TODO
-		throw new Exception("hola");
+		throw new ObjetoNoEncontradoException(propiedades.getMensajes().getEntidadNoEncontrada());
 	}
 
 	
@@ -85,7 +87,7 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 			}
 			return null;
 		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+			throw new ErrorTransaccionArchivoDiscoRuntimeException(propiedades.getMensajes().getErrorConvirtiendoObjeto());
 		}
 	}
 

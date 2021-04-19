@@ -1,0 +1,5 @@
+propiedades:
+  mensajes:
+    entidad-no-encontrada: 'La entidad con el ID: %s no fue encontrada.'
+    error-leyendo-archivo-en-disco: 'Ha ocurrido un error tratrando de leer el archivo en disco.'
+    error-convirtiendo-objeto: 'Ha ocurrido tratando de convertir objeto en transacción ocn archivo en disco.'
