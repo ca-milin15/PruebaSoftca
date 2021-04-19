@@ -6,7 +6,7 @@ public interface ArbolDBService {
 
 	void persistirArbolEnDisco(Arbol arbol);
 
-	String buscarObjeto(Integer id) throws Exception;
+	Object buscarObjeto(Integer id) throws Exception;
 	
 	<T> Object almacenarObjeto(Object objetoAAlmacenar, Class<T> entidad);
 }

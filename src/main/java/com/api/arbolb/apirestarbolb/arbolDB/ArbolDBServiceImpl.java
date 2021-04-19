@@ -39,7 +39,7 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 	}
 
 	@Override
-	public String buscarObjeto(Integer id) throws Exception {
+	public Object buscarObjeto(Integer id) throws Exception {
 		var arbolAlmacenado = leerArbolDelDisco();
 		var posibleRegistro = buscarRegistro(arbolAlmacenado.getNodo(), id);
 		if(!ObjectUtils.isEmpty(posibleRegistro)) {
@@ -71,7 +71,8 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 		try {
 			var arbolAlmacenado = leerArbolDelDisco();
 			var nodoRaiz = arbolAlmacenado.getNodo();
-			arbolAlmacenado.setNodo(buscarUbicacionParaInsertar(nodoRaiz, arbolAlmacenado.getAutoincremental(), convertirObjetoAString(objetoAAlmacenar)));
+			var objetoComoString = convertirObjetoAString(objetoAAlmacenar);
+			arbolAlmacenado.setNodo(buscarUbicacionParaInsertar(nodoRaiz, arbolAlmacenado.getAutoincremental(), objetoComoString));
 			var indiceAsignadoAEntidad = arbolAlmacenado.getAutoincremental();
 			arbolAlmacenado.setAutoincremental(indiceAsignadoAEntidad + 1);
 			persistirArbolEnDisco(arbolAlmacenado);
@@ -201,13 +202,7 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 	}
 
 	private Clave crearClave(Nodo nodoRaiz, List<Clave> listaClaves, Integer valor, Clave siguienteClave, Object objetoAAlmacenar) {
-		try {
-			String objetoAlmacenarComoString = objectMapper.writeValueAsString(objetoAAlmacenar);
-			return new Clave(valor, objetoAlmacenarComoString);
-		} catch (JsonProcessingException e) {
-			// TODO 
-			throw new RuntimeException(e);
-		}
+		return new Clave(valor, objetoAAlmacenar);
 	}
 
 	private Clave obtenerClaveSiguiente(List<Clave> listaClaves, int i) {
