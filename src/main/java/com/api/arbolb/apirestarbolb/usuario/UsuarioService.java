@@ -8,4 +8,6 @@ public interface UsuarioService {
 	UsuarioResponse buscarUsuarioPorId(Integer idUsuario);
 	
 	UsuarioResponse crearUsuario(UsuarioRequest usuarioRequest);
+	
+	UsuarioResponse actualizarUsuario(Integer idUsuario, UsuarioRequest usuarioRequest);
 }

@@ -10,4 +10,6 @@ public interface ArbolDBService {
 	Object buscarObjeto(Integer id) throws ObjetoNoEncontradoException;
 	
 	<T> Object almacenarObjeto(Object objetoAAlmacenar, Class<T> entidad);
+	
+	<T> Object actualizarObjeto(Integer id, Object objetoAAlmacenar, Class<T> entidad);
 }

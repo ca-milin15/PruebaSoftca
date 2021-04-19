@@ -26,4 +26,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return new UsuarioResponse(usuario);
 	}
 
+	@Override
+	public UsuarioResponse actualizarUsuario(Integer idUsuario, UsuarioRequest usuarioRequest) {
+		var usuario = usuarioRepository.actualizarUsuario(idUsuario, new Usuario(usuarioRequest));
+		return new UsuarioResponse(usuario);
+	}
+
 }

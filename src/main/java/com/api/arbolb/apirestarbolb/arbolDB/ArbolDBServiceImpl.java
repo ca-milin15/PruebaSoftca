@@ -29,6 +29,40 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 	Propiedades propiedades;
 	ObjectMapper objectMapper;
 
+
+	@Override
+	public <T> Object actualizarObjeto(Integer id, Object objetoAAlmacenar, Class<T> entidad) {
+		try {
+			var arbolAlmacenado = leerArbolDelDisco();
+			var objetoComoString = convertirObjetoAString(objetoAAlmacenar);
+			var posibleRegistro = buscarYActualizarRegistro(arbolAlmacenado.getNodo(), id, objetoComoString);
+			if(!ObjectUtils.isEmpty(posibleRegistro)) {
+				persistirArbolEnDisco(arbolAlmacenado);
+				return posibleRegistro.getEntidad();
+			}
+			return null;
+		} catch (JsonProcessingException e) {
+			throw new ErrorTransaccionArchivoDiscoRuntimeException(propiedades.getMensajes().getErrorConvirtiendoObjeto());
+		}
+	}
+	
+	private Clave buscarYActualizarRegistro(Nodo nodoRaiz, Integer id, Object objetoAAlmacenar) {
+		var listaClaves = nodoRaiz.getListaClave();
+		for (int i = 0; i < listaClaves.size(); i++) {
+			var claveSiguiente = obtenerClaveSiguiente(listaClaves, i);
+			if(id < listaClaves.get(i).getValorClave()) {
+				return buscarYActualizarRegistro(listaClaves.get(i).getNodoIzquierda(), id, objetoAAlmacenar);
+			} else if(listaClaves.get(i).getValorClave() == id) {
+				listaClaves.get(i).setEntidad(objetoAAlmacenar);
+				return listaClaves.get(i);
+			} else if (id > listaClaves.get(i).getValorClave() && ObjectUtils.isEmpty(claveSiguiente)) {
+				return buscarYActualizarRegistro(listaClaves.get(i).getNodoDerecha(), id, objetoAAlmacenar);
+			}
+		}
+		return null;
+	}
+
+	
 	@Override
 	public void persistirArbolEnDisco(Arbol arbol) {
 		try {
@@ -40,6 +74,7 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 			throw new ErrorTransaccionArchivoDiscoRuntimeException(propiedades.getMensajes().getErrorLeyendoArchivoEnDisco());
 		}
 	}
+	
 
 	@Override
 	public Object buscarObjeto(Integer id) throws ObjetoNoEncontradoException {
@@ -214,8 +249,5 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 			return null;
 		}
 	}
-
-
-
 
 }

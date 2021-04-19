@@ -8,4 +8,6 @@ public interface UsuarioRepository {
 	
 	Usuario crearUsuario(Usuario usuario);
 	
+	Usuario actualizarUsuario(Integer id, Usuario usuario);
+	
 }
