@@ -27,6 +27,6 @@ public class UsuarioResponse implements Serializable{
 		this.nombreUsuario = usuario.getNombreUsuario();
 		this.codigoUsuario = usuario.getCodigoUsuario();
 		this.nombreCompletoPersona = usuario.getNombreCompletoPersona();
-		this.estado = usuario.getEstado();
+		this.estado = usuario.getEstado().getDescripcion();
 	}
 }

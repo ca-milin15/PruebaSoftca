@@ -2,6 +2,8 @@ package com.api.arbolb.apirestarbolb.usuario.bean;
 
 import java.io.Serializable;
 
+import com.api.arbolb.apirestarbolb.utilidades.enums.beans.UsuarioEstadoEnum;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +24,13 @@ public class Usuario implements Serializable {
 	String nombreUsuario;
 	String codigoUsuario;
 	String nombreCompletoPersona;
-	String estado;
+	UsuarioEstadoEnum estado;
 
 	public Usuario(UsuarioRequest usuarioRequest) {
 		this.nombreUsuario = usuarioRequest.getNombreUsuario();
 		this.codigoUsuario = usuarioRequest.getCodigoUsuario();
 		this.nombreCompletoPersona = usuarioRequest.getNombreCompletoPersona();
+		this.estado = UsuarioEstadoEnum.ACTIVO;
 	}
 
 	public Usuario(int indiceAsignadoAEntidad, Object objetoAAlmacenar) {
