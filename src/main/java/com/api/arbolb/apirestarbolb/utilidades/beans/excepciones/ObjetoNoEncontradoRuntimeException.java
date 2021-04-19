@@ -1,6 +1,8 @@
 package com.api.arbolb.apirestarbolb.utilidades.beans.excepciones;
 
-public class ObjetoNoEncontradoRuntimeException extends RuntimeException {
+import com.api.arbolb.apirestarbolb.utilidades.beans.AplicacionRuntimeException;
+
+public class ObjetoNoEncontradoRuntimeException extends AplicacionRuntimeException {
 
 	private static final long serialVersionUID = 342833154528261237L;
 

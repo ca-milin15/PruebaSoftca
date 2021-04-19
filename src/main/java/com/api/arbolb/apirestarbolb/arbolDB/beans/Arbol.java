@@ -32,7 +32,7 @@ public class Arbol implements Serializable{
 	
 	public Arbol obtenerArbol (ObjectMapper objectMapper) {
 		var rutaArchivo = Paths.get(
-				"C:\\Users\\camilo\\Documents\\Proyectos Software\\PruebaSoftCaBack\\src\\main\\resources\\arbolDB\\tbl_usuario.json");
+				"C:\\Users\\camilo.rivera\\Documents\\Casof\\BackEnd\\src\\main\\resources\\arbolDB\\tbl_usuario.json");
 		var data = new StringBuilder();
 		try (var reader = Files.newBufferedReader(rutaArchivo, Charset.forName("UTF-8"))) {
 			var linea = new String();

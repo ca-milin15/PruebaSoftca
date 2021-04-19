@@ -68,7 +68,7 @@ public class ArbolDBServiceImpl implements ArbolDBService {
 		try {
 			var arbolComoString = objectMapper.writeValueAsString(arbol);
 			var rutaArchivo = Paths.get(
-					"C:\\Users\\camilo\\Documents\\Proyectos Software\\PruebaSoftCaBack\\src\\main\\resources\\arbolDB\\tbl_usuario.json");
+					"C:\\Users\\camilo.rivera\\Documents\\Casof\\BackEnd\\src\\main\\resources\\arbolDB\\tbl_usuario.json");
 			Files.write(rutaArchivo, arbolComoString.getBytes());
 		} catch (IOException e) {
 			throw new ErrorTransaccionArchivoDiscoRuntimeException(propiedades.getMensajes().getErrorLeyendoArchivoEnDisco());
